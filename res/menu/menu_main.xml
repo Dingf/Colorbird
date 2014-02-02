@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:colorbird="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/action_import"
+        android:icon="@drawable/ic_action_import_image"
+        android:title="@string/action_import"
+        colorbird:showAsAction="ifRoom"  />
+        
+    <item android:id="@+id/action_library"
+        android:icon="@drawable/ic_action_library"
+        android:title="@string/action_library"
+        colorbird:showAsAction="ifRoom"  />
+        
+    <item android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+        
+
+</menu>
