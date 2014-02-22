@@ -9,4 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     
+    <com.teamhex.colorbird.ColorSelectionBar
+        android:id="@+id/color_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
 </RelativeLayout>

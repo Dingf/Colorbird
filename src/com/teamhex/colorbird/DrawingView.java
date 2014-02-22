@@ -56,9 +56,6 @@ public class DrawingView extends View
     private Bitmap mScaledBitmap = null;
     private Rect mCanvasRect;
     private Paint mPathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint mBorderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private Paint[] mPalettePaint = null;
     
     private float mPaletteUnit;
     
@@ -106,26 +103,6 @@ public class DrawingView extends View
     	mPathPaint.setStrokeWidth(1);
       	mPathPaint.setStrokeJoin(Paint.Join.ROUND);
       	mPathPaint.setStrokeCap(Paint.Cap.ROUND);
-      	
-      	mBackgroundPaint.setStyle(Paint.Style.FILL);
-      	mBackgroundPaint.setColor(Color.BLACK);
-      	mBackgroundPaint.setAlpha(128);
-      	
-      	mBorderPaint.setStyle(Paint.Style.STROKE);
-      	mBorderPaint.setColor(Color.WHITE);
-      	mBorderPaint.setStrokeWidth(3);
-      	mBorderPaint.setAlpha(192);
-      	mBorderPaint.setStrokeJoin(Paint.Join.ROUND);
-      	mBorderPaint.setStrokeCap(Paint.Cap.ROUND);
-      	
-      	mPalettePaint = new Paint[mSettings.paletteSize];
-      	for (int i = 0; i < mSettings.paletteSize; i++)
-      	{
-      		mPalettePaint[i] = new Paint(Paint.ANTI_ALIAS_FLAG);
-      		mPalettePaint[i].setStyle(Paint.Style.FILL);
-      		mPalettePaint[i].setColor(Color.BLACK);
-      		mPalettePaint[i].setAlpha(64);
-      	}
     }
    
     public void setBitmap(Bitmap bitmap)
@@ -138,40 +115,6 @@ public class DrawingView extends View
 	    	int height = mBitmap.getHeight();
 	    	
 	        mScaledBitmap = Bitmap.createScaledBitmap(mBitmap, (int)(width * mSettings.scaleFactor), (int)(height * mSettings.scaleFactor), false);
-    	}
-    }
-    
-    public void setColors(int[] colors)
-    {
-    	if (colors != null)
-    	{
-	    	int size = colors.length;
-	    	if (size <= mSettings.paletteSize)
-	    	{
-		    	for (int i = 0; i < size; i++)
-		    	{
-		      		mPalettePaint[i].setColor(colors[i]);
-		      		mPalettePaint[i].setAlpha(255);
-		    	}
-		    	for (int i = size; i < mSettings.paletteSize; i++)
-		    	{
-		      		mPalettePaint[i].setColor(Color.BLACK);
-		      		mPalettePaint[i].setAlpha(64);
-		    	}
-	    	}
-	    	else
-	    	{
-	    		for (int i = 0; i < mSettings.paletteSize; i++)
-	    		{
-		      		mPalettePaint[i].setColor(colors[i]);
-		      		mPalettePaint[i].setAlpha(255);
-	    		}
-	    	}
-	    	invalidate();
-    	}
-    	else
-    	{
-    		//TODO: Alert the user that there weren't enough colors?
     	}
     }
     
@@ -205,32 +148,8 @@ public class DrawingView extends View
 		if(mBitmap == null)
 			return;
 		
-		int width = canvas.getWidth();
-		int height = canvas.getHeight();
-		
 		canvas.drawBitmap(mBitmap, null, mCanvasRect, null);
-		
 		canvas.drawPath(mDrawPath, mPathPaint);
-		
-		canvas.drawRect(0, height - (3.0f * mPaletteUnit), width, height, mBackgroundPaint);
-		
-		if (mPalettePaint != null)
-		{
-			for (int i = 0; i < mSettings.paletteSize; i++)
-			{
-				canvas.drawCircle(2.0f * mPaletteUnit + ((float)i * 3 * mPaletteUnit),
-						          mCanvas.getHeight() - (1.5f * mPaletteUnit),
-						          mPaletteUnit,
-						          mPalettePaint[i]);
-				
-	
-				canvas.drawCircle(2.0f * mPaletteUnit + ((float)i * 3 * mPaletteUnit),
-						          mCanvas.getHeight() - (1.5f * mPaletteUnit),
-						          mPaletteUnit,
-						          mBorderPaint);
-			}
-		}
-		
 
 		//Wait for one frame before getting the pixels (this allows us to connect the lasso
 		//immediately, instead of after the analysis)

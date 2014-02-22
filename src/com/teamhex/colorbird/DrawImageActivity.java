@@ -26,6 +26,7 @@ import com.teamhex.colorbird.palette.ColorPaletteGenerator;
 public class DrawImageActivity extends ActionBarActivity implements DrawingView.OnSelectionListener 
 {
 	private Bitmap mBitmap;
+	private ColorSelectionBar mColorSelectionBar;
 	private DrawingView mDrawingView;
 	private int[] mPalette = null;
 	
@@ -49,6 +50,8 @@ public class DrawImageActivity extends ActionBarActivity implements DrawingView.
 	    //Setup the drawing view for making selections
 	    mDrawingView = (DrawingView) findViewById(R.id.drawing_view);
 	    mDrawingView.setOnSelectionListener(this);
+        
+        mColorSelectionBar = (ColorSelectionBar) findViewById(R.id.color_bar);
 	    
 	    Intent i = getIntent();
 	    if (i.hasExtra("URI"))
@@ -167,7 +170,7 @@ public class DrawImageActivity extends ActionBarActivity implements DrawingView.
 		@Override
 	    protected void onPostExecute(Object obj) 
 		{
-			mDrawingView.setColors(mPalette);
+			mColorSelectionBar.setColors(mPalette);
 	    }
 	}
 
