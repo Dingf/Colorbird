@@ -57,8 +57,6 @@ public class DrawingView extends View
     private Rect mCanvasRect;
     private Paint mPathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     
-    private float mPaletteUnit;
-    
 	private ArrayList<Point> mPointList = new ArrayList<Point>();
 	private int[] mSelectionPixels;
     
@@ -137,7 +135,7 @@ public class DrawingView extends View
 		Bitmap canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
 		mCanvas = new Canvas(canvasBitmap);
 		mCanvasRect = new Rect(0, 0, w, h);
-		mPaletteUnit = w/(mSettings.paletteSize + 1 + (2 * mSettings.paletteSize));
+		//mPaletteUnit = w/(mSettings.paletteSize + 1 + (2 * mSettings.paletteSize));
 	}
 	
 	// Draw the view - will be called after touch event
